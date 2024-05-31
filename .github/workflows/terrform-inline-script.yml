@@ -81,6 +81,13 @@ jobs:
           export ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
           export ARM_CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}
           export ARM_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}
+
+          if [[ $(uname) == "Linux" ]]; then
+          apt-get update && apt-get install -y curl
+          elif [[ $(uname) == "Darwin" ]]; then
+          brew update && brew install curl
+          fi
+          
           curl -fsSL https://releases.hashicorp.com/terraform/latest/terraform_latest_linux_amd64.zip -o terraform.zip
           unzip terraform.zip
           mv terraform /usr/local/bin/terraform
