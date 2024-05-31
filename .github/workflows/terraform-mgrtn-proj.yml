@@ -29,13 +29,12 @@ jobs:
 
           call az storage account keys list -g ${{ env.resource_group_name }} -n ${{ env.storage_account_name }} 
 
-    - name: Azure CLI script
-      uses: azure/cli@v2
+    - name: 'Azure PowerShell script: InlineScript'
+      uses: azure/powershell@v1
       with:
-        azcliversion: latest
         inlineScript: |
-          ACCOUNT_KEY=${{ az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $STORAGE_ACCOUNT_NAME --query '[0].value' -o tsv }}
-          export ARM_ACCESS_KEY=$ACCOUNT_KEY
+          ${{ env.key }}=(Get-AzureRmStorageAccountKey -ResourceGroupName ${{ env.resource_group_name }} -AccountName ${{ env.storage_account_name }}).Value[0] Write-Host "##vso[task.setvariable variable=storagekey]${{ env.key}}"
+        
 
 
 # This workflow installs the latest version of Terraform CLI and configures the Terraform CLI configuration file
