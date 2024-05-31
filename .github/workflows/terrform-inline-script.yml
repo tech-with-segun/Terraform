@@ -63,7 +63,7 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-            Install-Module -Name AzureRM -AllowClobber
+            Install-Module -Name AzureRM -AllowClobber -Force
             # Retrieve the storage account key
             $env:key = (Get-AzureRmStorageAccountKey -ResourceGroupName ${{ vars.resource_group_name }} -AccountName ${{ vars.storage_account_name }}).Value[0]
             # Write the retrieved key to the console for verification (optional)
