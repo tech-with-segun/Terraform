@@ -23,21 +23,9 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          # this will create Azure resource group
+          az group create --location westus --name ${{ env.resource_group_name }}
+          az storage account create --name ${{ env.storage_account_name }} --resource-group ${{ env.resource_group_name }} --location westus --sku Standard_LRS
+          az storage container create --name ${{ env.container_name }} --account-name ${{ env.storage_account_name }}
+          az storage account keys list -g ${{ env.resource_group_name }} -n ${{ env.storage_account_name }}
 
-          call az group create --location westus --name ${{ env.resource_group_name }}
-
-          call az storage account create --name ${{ env.storage_account_name }} --resource-group ${{ env.resource_group_name }} --location westus --sku Standard_LRS
-
-          call az storage container create --name ${{ env.container_name }} --account-name ${{ env.storage_account_name }} 
-
-          call az storage account keys list -g ${{ env.resource_group_name }} -n ${{ env.storage_account_name }} 
-
-    - name: 'Azure PowerShell script: InlineScript'
-      uses: azure/powershell@v1
-      with:
-        inlineScript: |
-            # Retrieve the storage account key
-            $env:key = (Get-AzureRmStorageAccountKey -ResourceGroupName ${{ env.resource_group_name }} -AccountName ${{ env.storage_account_name }}).Value[0]
-            # Write the retrieved key to the console for verification (optional)
-            Write-Host "Storage account key retrieved: $env:key"
+          
