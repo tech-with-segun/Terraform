@@ -92,12 +92,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
+    needs:  # This section defines the dependency
+      build-and-deploy:
+      
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
-        shell: bash
-    needs:  # This section defines the dependency
-      build-and-deploy: 
+        shell: bash 
     
     steps:
     - uses: azure/login@v2
