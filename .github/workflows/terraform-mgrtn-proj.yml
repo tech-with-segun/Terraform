@@ -23,9 +23,9 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az group create --location westus --name ${{ env.resource_group_name }}
-          az storage account create --name ${{ env.storage_account_name }} --resource-group ${{ env.resource_group_name }} --location westus --sku Standard_LRS
-          az storage container create --name ${{ env.container_name }} --account-name ${{ env.storage_account_name }}
-          az storage account keys list -g ${{ env.resource_group_name }} -n ${{ env.storage_account_name }}
+          az group create --location westus --name ${{ vars.resource_group_name }}
+          az storage account create --name ${{ vars.storage_account_name }} --resource-group ${{ vars.resource_group_name }} --location westus --sku Standard_LRS
+          az storage container create --name ${{ vars.container_name }} --account-name ${{ vars.storage_account_name }}
+          az storage account keys list -g ${{ vars.resource_group_name }} -n ${{ vars.storage_account_name }}
 
           
