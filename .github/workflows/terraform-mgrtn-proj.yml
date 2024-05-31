@@ -1,11 +1,9 @@
 # File: .github/workflows/workflow.yml
 
 on: 
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - closed
     
 name: Run Azure Login With a Service Principal Secret
 
@@ -94,12 +92,7 @@ jobs:
 
     needs:  # This section defines the dependency
       build-and-deploy:
-      
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash 
-    
+  
     steps:
     - uses: azure/login@v2
       with:
