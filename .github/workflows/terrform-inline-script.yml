@@ -67,7 +67,7 @@ jobs:
             $env:key = (Get-AzureRmStorageAccountKey -ResourceGroupName ${{ vars.resource_group_name }} -AccountName ${{ vars.storage_account_name }}).Value[0]
             # Write the retrieved key to the console for verification (optional)
             Write-Host "Storage account key retrieved: $env:key"
-
+        azPSVersion: "latest"
 
     - uses: azure/login@v2
       with:
