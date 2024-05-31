@@ -37,7 +37,7 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          ${{ env.key }}=(Get-AzureRmStorageAccountKey -ResourceGroupName ${{ env.resource_group_name }} -AccountName ${{ env.storage_account_name }}).Value[0] Write-Host "##vso[task.setvariable variable=storagekey]${{ env.key }}"
+            ${env:key} = (Get-AzureRmStorageAccountKey -ResourceGroupName ${{ env.resource_group_name }} -AccountName ${{ env.storage_account_name }}).Value[0]
         
 
 
