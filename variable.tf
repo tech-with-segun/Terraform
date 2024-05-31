@@ -1,3 +1,27 @@
+variable "client_secret" {
+}
+
+# We strongly recommend using the required_providers block to set the
+# Azure Provider source and version being used
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
+}
+
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  features {}
+
+  client_id       = "ca279a1e-fa74-401b-b661-802eb88390b6"
+  client_secret   = var.client_secret
+  tenant_id       = "998f1477-c047-4c21-8f63-0ddeb50c1070"
+  subscription_id = "b61f6c78-544f-48ad-9479-7728a6292de3"
+}
+
 variable "admin_username" {
   description = "The admin username for the Windows virtual machine"
   type        = string
