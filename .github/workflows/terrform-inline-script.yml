@@ -41,12 +41,17 @@
 #       uses: hashicorp/setup-terraform@v1
 #       with:
 #         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-on: 
+name: Workflow 2
+
+on:
+  workflow_dispatch:
   push:
     branches:
       - main
-    
-name: Run Azure Login With a Service Principal Secret and Terraform
+
+concurrency:
+  group: deployment
+  cancel-in-progress: true
 
 jobs:
   
