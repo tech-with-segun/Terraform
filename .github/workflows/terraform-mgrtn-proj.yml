@@ -1,11 +1,16 @@
 # File: .github/workflows/workflow.yml
 # made repo public 
-on: 
+name: Workflow 1
+
+on:
+  workflow_dispatch:
   push:
     branches:
       - main
-    
-name: Run Azure Login With a Service Principal Secret
+
+concurrency:
+  group: deployment
+  cancel-in-progress: true
 
 jobs:
   
