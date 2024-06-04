@@ -46,7 +46,7 @@ jobs:
 
       - name: Break Lease on Terraform State Blob
         run: |
-          az storage blob lease break --blob-name terraform.tfstate --container-name terracontainernowsegun --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --account-key ${{ vars.KEY }}
+          az storage blob lease break --blob-name terraform.tfstate --container-name terracontainernowsegun --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --account-key ${ACCOUNT_KEY}
       - name: Terraform Init
         env:
           ARM_ACCESS_KEY: ${{ env.TF_VAR_arm_access_key }}
