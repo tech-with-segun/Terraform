@@ -50,7 +50,7 @@ variable "kv_name" {
   default     = "ia-kv-segun728"
 }
 
-variable "storage_account_name" {
+variable "boot_storage_account_name" {
   description = "The name of the storage account for boot diagnostics."
   type        = string
   default     = "iasegunbootstorage1"
