@@ -44,6 +44,10 @@ jobs:
           ACCOUNT_KEY=$(az storage account keys list --resource-group ${{ vars.RESOURCE_GROUP_NAME }} --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --query '[0].value' -o tsv)
           echo "TF_VAR_arm_access_key=${ACCOUNT_KEY}" >> $GITHUB_ENV
 
+      - name: Break Lease on Terraform State Blob
+        run: |
+          az storage blob lease break --blob-name terraform.tfstate --container-name terracontainernowsegun --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --account-key $ACCOUNT_KEY
+
       - name: Terraform Init
         env:
           ARM_ACCESS_KEY: ${{ env.TF_VAR_arm_access_key }}
