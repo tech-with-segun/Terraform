@@ -39,7 +39,7 @@ jobs:
       - name: Get Storage Account Key
         id: get_storage_key
         run: |
-          ACCOUNT_KEY=$(az storage account keys list --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --query '[0].value' -o tsv)
+          ACCOUNT_KEY=$(az storage account keys list --resource-group ${{ vars.RESOURCE_GROUP_NAME }} --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --query '[0].value' -o tsv)
           echo "ACCOUNT_KEY=${ACCOUNT_KEY}" >> $GITHUB_ENV
 
       - name: Terraform Init
