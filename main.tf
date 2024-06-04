@@ -77,7 +77,7 @@ network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
 resource "azurerm_storage_account" "boot_storage" {
-name = var.storage_account_name
+name = var.boot_storage_account_name
 location = azurerm_resource_group.rg.location
 resource_group_name = azurerm_resource_group.rg.name
 account_tier = "Standard"
