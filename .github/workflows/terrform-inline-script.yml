@@ -39,21 +39,21 @@ jobs:
       - name: Get Storage Account Key
         id: get_storage_key
         run: |
-          ACCOUNT_KEY=$(az storage account keys list --resource-group ${{ vars.RESOURCE_GROUP_NAME }} --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --query '[0].value' -o tsv)
+          ACCOUNT_KEY=$(az storage account keys list --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --query '[0].value' -o tsv)
           echo "ACCOUNT_KEY=${ACCOUNT_KEY}" >> $GITHUB_ENV
 
       - name: Terraform Init
         env:
           ARM_ACCESS_KEY: ${{ env.ACCOUNT_KEY }}
-        run: terraform init
+        run: terraform init -lock=false
 
       - name: Terraform Plan
         env:
           ARM_ACCESS_KEY: ${{ env.ACCOUNT_KEY }}
-        run: terraform plan -input=false -detailed-exitcode
+        run: terraform plan -input=false -detailed-exitcode -lock=false
 
       - name: Terraform Apply (Optional Prompt)
         if: success()
         env:
           ARM_ACCESS_KEY: ${{ env.ACCOUNT_KEY }}
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -lock=false
