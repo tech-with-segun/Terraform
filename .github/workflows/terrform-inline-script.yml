@@ -52,7 +52,7 @@ jobs:
       - name: Terraform Plan
         env:
           ARM_ACCESS_KEY: ${{ env.TF_VAR_arm_access_key }}
-        run: terraform plan -input=false -detailed-exitcode -lock=false
+        run: terraform plan -lock=false
 
       - name: Terraform Apply (Optional Prompt)
         if: success()
