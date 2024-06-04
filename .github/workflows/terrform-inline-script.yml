@@ -31,29 +31,23 @@ jobs:
 
       - name: Configure Azure credentials for Terraform
         run: |
-          echo "ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "ARM_CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "ARM_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
-          echo "ARM_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+          echo "TF_VAR_client_id=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "TF_VAR_client_secret=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "TF_VAR_tenant_id=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
+          echo "TF_VAR_subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
 
       - name: Get Storage Account Key
         id: get_storage_key
         run: |
           ACCOUNT_KEY=$(az storage account keys list --resource-group ${{ vars.RESOURCE_GROUP_NAME }} --account-name ${{ vars.STORAGE_ACCOUNT_NAME }} --query '[0].value' -o tsv)
-          echo "ACCOUNT_KEY=${ACCOUNT_KEY}" >> $GITHUB_ENV
+          echo "TF_VAR_arm_access_key=${ACCOUNT_KEY}" >> $GITHUB_ENV
 
       - name: Terraform Init
-        env:
-          ARM_ACCESS_KEY: ${{ env.ACCOUNT_KEY }}
         run: terraform init -lock=false
 
       - name: Terraform Plan
-        env:
-          ARM_ACCESS_KEY: ${{ env.ACCOUNT_KEY }}
         run: terraform plan -input=false -detailed-exitcode -lock=false
 
       - name: Terraform Apply (Optional Prompt)
         if: success()
-        env:
-          ARM_ACCESS_KEY: ${{ env.ACCOUNT_KEY }}
         run: terraform apply -auto-approve -lock=false
